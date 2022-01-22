@@ -340,7 +340,6 @@ class Osk {
     }
 
     fun changeLanguage() {
-/*
         removeElements(relativelayouttarget)
         elements = ArrayList<OskButton>()
 
@@ -350,7 +349,6 @@ class Osk {
         // hack, make visible into false so it can do the keyboard again
         visible = false
         toggle()
-*/
     }
 
     fun toggle() {
