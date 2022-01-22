@@ -139,8 +139,10 @@ class OskSimpleButton(val key: Char, val shiftKey: Char, positionX: Int, positio
     private val shiftKeyStr = shiftKey.toString()
     private var curKeyStr = keyStr
 
+
     val mKeyCharacterMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD)
     val keyEvent = mKeyCharacterMap.getEvents(key.toString().toCharArray())
+
 
     override fun pressed() {
         SDLActivity.onNativeKeyDown(keyEvent[0].getKeyCode())
@@ -338,6 +340,7 @@ class Osk {
     }
 
     fun changeLanguage() {
+/*
         removeElements(relativelayouttarget)
         elements = ArrayList<OskButton>()
 
@@ -347,6 +350,7 @@ class Osk {
         // hack, make visible into false so it can do the keyboard again
         visible = false
         toggle()
+*/
     }
 
     fun toggle() {
