@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity() {
                 .show()
             return
         }
-/**
+
         // Second, check if user has at least one mod enabled
 	var dataDirs = ArrayList<String>()
 	dataDirs.add(inst.findDataFiles())
@@ -204,7 +204,7 @@ class MainActivity : AppCompatActivity() {
 
             return
         }
-*/
+
         // If everything's alright, start the game
         startGame()
     }
