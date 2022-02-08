@@ -562,7 +562,7 @@ class MainActivity : AppCompatActivity() {
                         "strength influences hand to hand" to prefs.getString("gs_factor_strength_into_hand-to-hand_combat", "0").toString(),
 
 			// Visuals graphics
-                        "antialiasing" to prefs.getString("gs_antialiasing", "0").toString(),
+                        //"antialiasing" to prefs.getString("gs_antialiasing", "0").toString(),
                         "framerate limit" to prefs.getString("gs_framerate_limit", "60").toString(),
 
 			// Visuals animations
