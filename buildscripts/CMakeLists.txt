@@ -41,7 +41,7 @@ set(GL4ES_VERSION v1.1.4)
 set(GL4ES_HASH SHA256=b565e717c7d192e936bda25f3cb90ad8db398af56414ec08294b6716574c1a6d)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
-set(OSG_VERSION 5ac656b7412cf9069c63b55ef398ba507ac73186)
+set(OSG_VERSION bbe61c3bc510a4f5bb4aea21cce506519c2d24e6)
 set(OSG_HASH SHA256=aea196550f02974d6d09291c5d83b51ca6a03b3767e234a8c0e21322927d1e12)
 
 # https://github.com/lz4/lz4/releases
@@ -53,7 +53,7 @@ set(LUAJIT_VERSION 2.1.0-beta3)
 set(LUAJIT_HASH SHA256=1ad2e34b111c802f9d0cdf019e986909123237a28c746b21295b63c9e785d9c3)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 09860752482e994b2ab184d2f31a85c500d3aa5c)
+set(OPENMW_VERSION 5ac656b7412cf9069c63b55ef398ba507ac73186)
 set(OPENMW_HASH SHA256=44d044ad0a5546216fe611fe92c37065bb07e2efeeeaac4f049dae03df313186)
 
 # End of configurable options
