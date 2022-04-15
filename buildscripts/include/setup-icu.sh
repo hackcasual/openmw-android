@@ -1,13 +1,6 @@
 #!/bin/bash
 
 set -e
-
-
-pushd downloads
-popd
-
-
-
 mkdir -p build
 cd build
 
