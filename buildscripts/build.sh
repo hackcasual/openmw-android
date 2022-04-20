@@ -124,7 +124,7 @@ echo "(Please run ./clean.sh manually if you modify any of the options)"
 echo ""
 
 echo "==> Download and set up the NDK"
-./include/setup-icu.sh
+#./include/setup-icu.sh
 ./include/download-ndk.sh
 ./include/setup-ndk.sh
 
