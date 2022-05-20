@@ -399,7 +399,7 @@ class Osc {
         val btnColumnSpacing = 65
 
         // Fn buttons: F1, F3, F4, F10, F11 are the only ones we care about
-        arrayOf(1, 3, 4, 10, 11).forEachIndexed{ i, el ->
+        arrayOf(1, 2, 3, 4, 10, 11).forEachIndexed{ i, el ->
             val code = 130 + el
             val column = (i + 1) / 4 + 2
             val row = (i + 1) % 4 + 1
