@@ -108,6 +108,7 @@ class GameActivity : SDLActivity() {
 
         val shaderDirOption = prefs!!.getString("pref_shadersDir_v2", "")
         if (shaderDirOption == "modified") Os.setenv("OPENMW_SHADERS", "modified", true)
+        if (shaderDirOption == "zesterer") Os.setenv("OPENMW_SHADERS", "zesterer", true)
 
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_nohighp", false) && shaderDirOption == "modified") {
             Os.setenv("LIBGL_NOHIGHP", "1", true)

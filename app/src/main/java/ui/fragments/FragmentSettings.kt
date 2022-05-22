@@ -206,7 +206,7 @@ class FragmentSettings : PreferenceFragment(), OnSharedPreferenceChangeListener 
                 sharedPref.getString("pref_graphicsLibrary_v2", "") != "gles1"
 
 	var isnohighpenabled = false;
-        if(sharedPref.getString("pref_shadersDir_v2", "") == "modified" || sharedPref.getString("pref_shadersDir_v2", "") == "experimental")
+        if(sharedPref.getString("pref_shadersDir_v2", "") == "modified")
 		isnohighpenabled = true
         findPreference("pref_nohighp").isEnabled = isnohighpenabled
 /*
