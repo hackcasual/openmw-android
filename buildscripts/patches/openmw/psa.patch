@@ -1,8 +1,8 @@
 diff --git a/apps/openmw/mwstate/statemanagerimp.cpp b/apps/openmw/mwstate/statemanagerimp.cpp
-index 4e4a8e95d..910728caa 100644
+index 9f572fde9..bdad92a2d 100644
 --- a/apps/openmw/mwstate/statemanagerimp.cpp
 +++ b/apps/openmw/mwstate/statemanagerimp.cpp
-@@ -12,6 +12,7 @@
+@@ -14,6 +14,7 @@
  #include <components/settings/settings.hpp>
  
  #include <osg/Image>
@@ -10,12 +10,12 @@ index 4e4a8e95d..910728caa 100644
  
  #include <osgDB/Registry>
  
-@@ -302,6 +303,8 @@ void MWState::StateManager::saveGame (const std::string& description, const Slot
- 
+@@ -309,6 +310,8 @@ void MWState::StateManager::saveGame (const std::string& description, const Slot
          Settings::Manager::setString ("character", "Saves",
              slot->mPath.parent_path().filename().string());
+ 
++        osg::Hint::GL4ES_SavePSA();
 +
-+        osg::Hint::GL4ES_SavePSA(); 
-     }
-     catch (const std::exception& e)
-     {
+         const auto finish = std::chrono::steady_clock::now();
+ 
+         Log(Debug::Info) << '\'' << description << "' is saved in "
