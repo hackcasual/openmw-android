@@ -561,11 +561,29 @@ class MainActivity : AppCompatActivity() {
                         "allow actors to follow over water surface" to if(prefs.getBoolean("gs_always_allow_npc_to_follow_over_water_surface", true)) "true" else "false",
                         "strength influences hand to hand" to prefs.getString("gs_factor_strength_into_hand-to-hand_combat", "0").toString(),
 
+			// Visuals terrain
+                        "object paging min size" to prefs.getString("gs_object_paging_min_size", "0.01").toString(),
+                        "distant terrain" to if(prefs.getBoolean("gs_distant_land", false)) "true" else "false",
+                        "object paging active grid" to if(prefs.getBoolean("gs_active_grid_object_paging", true)) "true" else "false",
+
 			// Visuals graphics
                         //"antialiasing" to prefs.getString("gs_antialiasing", "0").toString(),
                         "framerate limit" to prefs.getString("gs_framerate_limit", "60").toString(),
 
-			// Visuals animations
+			// Visuals shaders
+                        "auto use object normal maps" to if(prefs.getBoolean("gs_auto_use_object_normal_maps", false)) "true" else "false",
+                        "auto use object specular maps" to if(prefs.getBoolean("gs_auto_use_object_specular_maps", false)) "true" else "false",
+                        "auto use terrain normal maps" to if(prefs.getBoolean("gs_auto_use_terrain_normal_maps", false)) "true" else "false",
+                        "auto use terrain specular maps" to if(prefs.getBoolean("gs_auto_use_terrain_specular_maps", false)) "true" else "false",
+                        "apply lighting to environment maps" to if(prefs.getBoolean("gs_bump_map_local_lighting", false)) "true" else "false",
+                        //"soft particles" to if(prefs.getBoolean("gs_soft_particles", false)) "true" else "false",
+
+			// Visuals fog
+                        "radial fog" to if(prefs.getBoolean("gs_radial_fog", false)) "true" else "false",
+                        "exponential fog" to if(prefs.getBoolean("gs_exponential_fog", false)) "true" else "false",
+                        "sky blending" to if(prefs.getBoolean("gs_sky_blending", false)) "true" else "false",
+
+			// Animations
                         "use magic item animations" to if(prefs.getBoolean("gs_use_magic_item_animation", false)) "true" else "false",
                         "use additional anim sources" to if(prefs.getBoolean("gs_use_additional_animation_sources", false)) "true" else "false",
                         "weapon sheathing" to if(prefs.getBoolean("gs_weapon_sheating", false)) "true" else "false",
@@ -574,27 +592,7 @@ class MainActivity : AppCompatActivity() {
                         "smooth movement" to if(prefs.getBoolean("gs_smooth_movement", false)) "true" else "false",
                         "turn to movement direction" to if(prefs.getBoolean("gs_turn_to_movement_direction", false)) "true" else "false",
 
-			// Visuals shaders
-                        "auto use object normal maps" to if(prefs.getBoolean("gs_auto_use_object_normal_maps", false)) "true" else "false",
-                        "auto use object specular maps" to if(prefs.getBoolean("gs_auto_use_object_specular_maps", false)) "true" else "false",
-                        "auto use terrain normal maps" to if(prefs.getBoolean("gs_auto_use_terrain_normal_maps", false)) "true" else "false",
-                        "auto use terrain specular maps" to if(prefs.getBoolean("gs_auto_use_terrain_specular_maps", false)) "true" else "false",
-                        "apply lighting to environment maps" to if(prefs.getBoolean("gs_bump_map_local_lighting", false)) "true" else "false",
-                        "radial fog" to if(prefs.getBoolean("gs_radial_fog", false)) "true" else "false",
-                        "soft particles" to if(prefs.getBoolean("gs_soft_particles", false)) "true" else "false",
-
-			// Visuals terrain
-                        "object paging min size" to prefs.getString("gs_object_paging_min_size", "0.01").toString(),
-                        "distant terrain" to if(prefs.getBoolean("gs_distant_land", false)) "true" else "false",
-                        "object paging active grid" to if(prefs.getBoolean("gs_active_grid_object_paging", true)) "true" else "false",
-
-			// Camera
-                        "view over shoulder" to if(prefs.getBoolean("gs_view_over_shoulder", false)) "true" else "false",
-                        "auto switch shoulder" to if(prefs.getBoolean("gs_auto_switch_shoulder", true)) "true" else "false",
-                        "view over shoulder offset" to prefs.getString("gs_default_shoulder", "30 -10").toString(),
-                        "preview if stand still" to if(prefs.getBoolean("gs_preview_if_standing_still", false)) "true" else "false",
-                        "deferred preview rotation" to if(prefs.getBoolean("gs_deferred_preview_rotation", true)) "true" else "false",
-                        "head bobbing" to if(prefs.getBoolean("gs_head_bobbing", false)) "true" else "false",
+			// Animations FirstPerson
                         "hand inertia" to if(prefs.getBoolean("gs_hand_inertia", false)) "3.0" else "0.0",
 
 			// Interface

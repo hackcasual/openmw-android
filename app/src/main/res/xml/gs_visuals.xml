@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="Terrain">
+
+        <EditTextPreference
+            android:key="gs_object_paging_min_size"
+            android:title="Object Paging Min Size"
+            android:dialogTitle="Object Paging Min Size"
+            android:inputType="numberDecimal"
+            android:hint="0.010"
+            android:defaultValue="0.010"
+            android:summary="Controls how large an object must be to be visible in the scene. The object’s size is divided by its distance to the camera and the result of the division is compared with this value. The smaller this value is, the more objects you will see in the scene."/>
+
+        <CheckBoxPreference
+            android:key="gs_distant_land"
+            android:title="Distant Land"
+            android:summary="If true, use paging and LOD algorithms to display the entire terrain. If false, only display terrain of the loaded cells."/>
+
+        <CheckBoxPreference
+            android:key="gs_active_grid_object_paging"
+            android:title="Active Grid Object Paging"
+            android:defaultValue="true"
+            android:summary="Use object paging for active cells grid."/>
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="Graphics">
 <!--
         <ListPreference
@@ -20,46 +44,6 @@
             android:hint="60"
             android:defaultValue="60"
             android:summary="Maximum rendering framerate."/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Animations">
-
-        <CheckBoxPreference
-            android:key="gs_use_magic_item_animation"
-            android:title="Use Magic Item Animation"
-            android:summary="Use casting animations for magic items, just as for spells."/>
-
-        <CheckBoxPreference
-            android:key="gs_use_additional_animation_sources"
-            android:title="Use Additional Animation Sources"
-            android:summary="Load per-group KF-files and skeleton files from Animations folder."/>
-
-        <CheckBoxPreference
-            android:key="gs_weapon_sheating"
-            android:title="Weapon Sheating"
-            android:summary="Render holstered weapons (with quivers and scabbards), requires modded assets."/>
-
-        <CheckBoxPreference
-            android:key="gs_shield_sheating"
-            android:title="Shield Sheating"
-            android:summary="Render holstered shield, requires modded assets."/>
-
-        <CheckBoxPreference
-            android:key="gs_enable_graphics_herbalism"
-            android:title="Enable Graphics Herbalism"
-            android:defaultValue="true"
-            android:summary="If this setting is true, containers supporting graphic herbalism will do so instead of opening the menu."/>
-
-        <CheckBoxPreference
-            android:key="gs_smooth_movement"
-            android:title="Smooth Movement"
-            android:summary="Makes NPCs and player movement more smooth. Recommended to use with turn to movement direction enabled."/>
-
-        <CheckBoxPreference
-            android:key="gs_turn_to_movement_direction"
-            android:title="Turn to Movement Direction"
-            android:summary="Affects side and diagonal movement. Enabling this setting makes movement more realistic. If disabled then the whole character's body is pointed to the direction of view. Diagonal movement has no special animation and causes sliding. If enabled then the character turns lower body to the direction of movement. Upper body is turned partially. Head is always pointed to the direction of view. In combat mode it works only for diagonal movement. In non-combat mode it changes straight right and straight left movement as well. Also turns the whole body up or down when swimming according to the movement direction."/>
 
     </PreferenceCategory>
 
@@ -90,39 +74,31 @@
             android:title="Bump/Reflect Map Local Lighting"
             android:summary="Normally environment map reflections aren't affected by lighting, which makes environment-mapped (and thus bump-mapped objects) glow in the dark. Morrowind Code Patch includes an option to remedy that by doing environment-mapping before applying lighting, this is the equivalent of that option. Affected objects will use shaders."/>
 
+<!--
+        <CheckBoxPreference
+            android:key="gs_soft_particles"
+            android:title="Soft Particles"
+            android:summary="Enables soft particles for particle effects. This technique softens the intersection between individual particles and other opaque geometry by blending between them."/>
+-->
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Fog">
+
         <CheckBoxPreference
             android:key="gs_radial_fog"
             android:title="Radial Fog"
             android:summary="By default, the fog becomes thicker proportionally to your distance from the clipping plane set at the clipping distance, which causes distortion at the edges of the screen. This setting makes the fog use the actual eye point distance (or so called Euclidean distance) to calculate the fog, which makes the fog look less artificial, especially if you have a wide FOV."/>
 
         <CheckBoxPreference
-            android:key="gs_soft_particles"
-            android:title="Soft Particles"
-            android:summary="Enables soft particles for particle effects. This technique softens the intersection between individual particles and other opaque geometry by blending between them."/>
+            android:key="gs_exponential_fog"
+            android:title="Exponential Fog"
+            android:summary="Whether to use exponential formula for fog."/>
+
+        <CheckBoxPreference
+            android:key="gs_sky_blending"
+            android:title="Sky Blending"
+            android:summary="Whether to hide the clipping plane by blending with sky."/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Terrain">
-
-        <EditTextPreference
-            android:key="gs_object_paging_min_size"
-            android:title="Object Paging Min Size"
-            android:dialogTitle="Object Paging Min Size"
-            android:inputType="numberDecimal"
-            android:hint="0.010"
-            android:defaultValue="0.010"
-            android:summary="Controls how large an object must be to be visible in the scene. The object’s size is divided by its distance to the camera and the result of the division is compared with this value. The smaller this value is, the more objects you will see in the scene."/>
-
-        <CheckBoxPreference
-            android:key="gs_distant_land"
-            android:title="Distant Land"
-            android:summary="If true, use paging and LOD algorithms to display the entire terrain. If false, only display terrain of the loaded cells."/>
-
-        <CheckBoxPreference
-            android:key="gs_active_grid_object_paging"
-            android:title="Active Grid Object Paging"
-            android:defaultValue="true"
-            android:summary="Use object paging for active cells grid."/>
-
-    </PreferenceCategory>
 </PreferenceScreen>

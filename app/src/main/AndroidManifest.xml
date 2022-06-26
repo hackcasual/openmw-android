@@ -71,12 +71,12 @@
             android:label="@string/visuals_activity_settings"
             />
         <activity
-            android:name="ui.activity.Camera_SettingsActivity"
+            android:name="ui.activity.Animations_SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="fullUser"
             android:theme="@style/MyTheme"
             android:exported="true"
-            android:label="@string/camera_activity_settings"
+            android:label="@string/animations_activity_settings"
             />
         <activity
             android:name="ui.activity.Interface_SettingsActivity"

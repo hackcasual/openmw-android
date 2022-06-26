@@ -171,7 +171,7 @@
     <string name="activity_settings">Settings</string>
     <string name="game_mechanics_activity_settings">Game Mechanics</string>
     <string name="visuals_activity_settings">Visuals</string>
-    <string name="camera_activity_settings">Camera</string>
+    <string name="animations_activity_settings">Animations</string>
     <string name="interface_activity_settings">Interface</string>
     <string name="bug_fixes_activity_settings">Bug Fixes</string>
     <string name="miscellaneous_activity_settings">Miscellaneous</string>

@@ -12,8 +12,8 @@
         />
 
     <Preference
-        android:key="game_settings_camera"
-        android:title="Camera"
+        android:key="game_settings_animations"
+        android:title="Animations"
         />
 
     <Preference

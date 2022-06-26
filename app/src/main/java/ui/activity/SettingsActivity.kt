@@ -71,8 +71,8 @@ class FragmentGameSettings : PreferenceFragment() {
             true
         }
 
-        findPreference("game_settings_camera").setOnPreferenceClickListener {
-            val intent = Intent(activity, Camera_SettingsActivity::class.java)
+        findPreference("game_settings_animations").setOnPreferenceClickListener {
+            val intent = Intent(activity, Animations_SettingsActivity::class.java)
             this.startActivity(intent)
             true
         }
@@ -156,8 +156,7 @@ class FragmentGameSettingsPage(val res: Int) : PreferenceFragment(), OnSharedPre
 
         if (res == R.xml.gs_game_mechanics) findPreference("gs_always_allow_npc_to_follow_over_water_surface").isEnabled = preferenceScreen.sharedPreferences.getBoolean("gs_build_navmesh", true)
 
-        if (res == R.xml.gs_visuals) updatePreference(preferenceScreen.sharedPreferences, "gs_use_additional_animation_sources")
-        if (res == R.xml.gs_camera) updatePreference(preferenceScreen.sharedPreferences, "gs_view_over_shoulder")
+        if (res == R.xml.gs_animations) updatePreference(preferenceScreen.sharedPreferences, "gs_use_additional_animation_sources")
         if (res == R.xml.gs_engine) updatePreference(preferenceScreen.sharedPreferences, "gs_build_navmesh")
     }
 
@@ -175,11 +174,6 @@ class FragmentGameSettingsPage(val res: Int) : PreferenceFragment(), OnSharedPre
         if(key == "gs_use_additional_animation_sources") {
             findPreference("gs_weapon_sheating").isEnabled = sharedPreferences.getBoolean("gs_use_additional_animation_sources", false)
             findPreference("gs_shield_sheating").isEnabled = sharedPreferences.getBoolean("gs_use_additional_animation_sources", false)
-        }
-
-        if(key == "gs_view_over_shoulder") {
-            findPreference("gs_auto_switch_shoulder").isEnabled = sharedPreferences.getBoolean("gs_view_over_shoulder", false)
-            findPreference("gs_default_shoulder").isEnabled = sharedPreferences.getBoolean("gs_view_over_shoulder", false)
         }
 
         if(key == "gs_build_navmesh") {
@@ -235,7 +229,7 @@ class Visuals_SettingsActivity : AppCompatActivity() {
     }
 }
 
-class Camera_SettingsActivity : AppCompatActivity() {
+class Animations_SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -244,7 +238,7 @@ class Camera_SettingsActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.settings_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        fragmentManager.beginTransaction().replace(R.id.settings_frame, FragmentGameSettingsPage(R.xml.gs_camera)).commit()
+        fragmentManager.beginTransaction().replace(R.id.settings_frame, FragmentGameSettingsPage(R.xml.gs_animations)).commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
