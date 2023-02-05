@@ -64,6 +64,8 @@ import java.util.*
 
 import android.util.Base64
 
+import android.content.res.Configuration
+
 class MainActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
 
@@ -491,12 +493,35 @@ class MainActivity : AppCompatActivity() {
                 if(resourcesDirCreated)
                     src.copyRecursively(dst, false) 
 
+                //val displayInCutoutArea = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_display_cutout_area", false)
+                obtainFixedScreenResolution()
+                val dm = DisplayMetrics()
+                windowManager.defaultDisplay.getRealMetrics(dm)
 
+                val orientation = this.getResources().getConfiguration().orientation
+                var displayWidth = 0
+                var displayHeight = 0
+
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)
+                {
+                    displayWidth = if(resolutionX == 0) dm.heightPixels else resolutionX
+                    displayHeight = if(resolutionY == 0) dm.widthPixels else resolutionY
+                }
+                else
+                {
+                    displayWidth = if(resolutionX == 0) dm.widthPixels else resolutionX
+                    displayHeight = if(resolutionY == 0) dm.heightPixels else resolutionY
+                }
+            
+                File("/storage/emulated/0/omw_nightly/test.txt").writeText(displayWidth.toString() + " " + displayHeight.toString() + "\n" + resolutionX.toString() + " " + resolutionY.toString())
+                
                 configureDefaultsBin(mapOf(
                         "scaling factor" to "%.2f".format(Locale.ROOT, scaling),
                         // android-specific defaults
                         "viewing distance" to "2048.0",
                         "camera sensitivity" to "0.4",
+                        "resolution x" to displayWidth.toString(),
+                        "resolution y" to displayHeight.toString(),
                         // and a bunch of windows positioning
                         "stats x" to "0.0",
                         "stats y" to "0.0",

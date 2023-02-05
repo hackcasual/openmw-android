@@ -101,6 +101,10 @@
             android:hint="640x480"
             />
 
+        <CheckBoxPreference
+            android:key="pref_display_cutout_area"
+            android:title="@string/pref_display_cutout_area" />
+
         <EditTextPreference
             android:key="pref_gamma"
             android:title="@string/pref_gamma"
