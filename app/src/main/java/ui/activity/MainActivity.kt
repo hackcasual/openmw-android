@@ -672,12 +672,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_reset_config -> {
-                removeStaticFiles()
-                Toast.makeText(this, getString(R.string.config_was_reset), Toast.LENGTH_SHORT).show()
-                true
-            }
-
             R.id.action_reset_user_config -> {
                 removeUserConfig()
                 Toast.makeText(this, getString(R.string.user_config_was_reset), Toast.LENGTH_SHORT).show()
