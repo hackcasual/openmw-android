@@ -96,7 +96,7 @@ if [[ $LTO = "true" ]]; then
 	CFLAGS="$CFLAGS -flto=thin"
 	CXXFLAGS="$CXXFLAGS -flto=thin"
 	# emulated-tls should not be needed in ndk r18 https://github.com/android-ndk/ndk/issues/498#issuecomment-327825754
-	LDFLAGS="$LDFLAGS -flto=thin -Wl,-plugin-opt=-emulated-tls -fuse-ld=gold"
+	LDFLAGS="$LDFLAGS -flto=thin -Wl,-plugin-opt=-emulated-tls -fuse-ld=lld"
 fi
 
 if [[ $ARCH = "arm" ]]; then
@@ -124,8 +124,8 @@ echo "(Please run ./clean.sh manually if you modify any of the options)"
 echo ""
 
 echo "==> Download and set up the NDK"
-./include/setup-icu.sh
 ./include/download-ndk.sh
+./include/setup-icu.sh
 ./include/setup-ndk.sh
 
 NCPU=$(grep -c ^processor /proc/cpuinfo)
@@ -182,7 +182,7 @@ mkdir -p ../app/src/main/jniLibs/$ABI/
 find build/$ARCH/openmw-prefix/ -iname "libopenmw.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/libopenmw.so \;
 
 # copy over libs we compiled
-cp prefix/$ARCH/lib/{libopenal,libSDL2,libhidapi,libGL}.so ../app/src/main/jniLibs/$ABI/
+cp prefix/$ARCH/lib/{libopenal,libSDL2,libhidapi,libGL,libcollada-dom2.5-dp}.so ../app/src/main/jniLibs/$ABI/
 
 # copy over libc++_shared
 find ./toolchain/$ARCH/sysroot/usr/lib/$NDK_TRIPLET -iname "libc++_shared.so" -exec cp "{}" ../app/src/main/jniLibs/$ABI/ \;
@@ -231,6 +231,6 @@ fi
 PATH="$DIR/toolchain/ndk/prebuilt/linux-x86_64/bin/:$DIR/toolchain/$ARCH/$NDK_TRIPLET/bin/:$PATH" ./include/gdb-add-index ./symbols/$ABI/*.so
 
 # gradle should do it, but just in case...
-$NDK_TRIPLET-strip ../app/src/main/jniLibs/$ABI/*.so
+llvm-strip ../app/src/main/jniLibs/$ABI/*.so
 
 echo "==> Success"

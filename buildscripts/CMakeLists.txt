@@ -49,11 +49,14 @@ set(LZ4_VERSION 1.9.3)
 set(LZ4_HASH SHA256=030644df4611007ff7dc962d981f390361e6c97a34e5cbc393ddfbe019ffe2c1)
 
 # https://luajit.org/download.html
-set(LUAJIT_VERSION 2.1.0-beta3)
+set(LUAJIT_VERSION 505e2c03de35e2718eef0d2d3660712e06dadf1f)
 set(LUAJIT_HASH SHA256=1ad2e34b111c802f9d0cdf019e986909123237a28c746b21295b63c9e785d9c3)
 
+set(LIBICU_VERSION 70-1)
+set(LIBICU_HASH SHA256=4013d7aff8a34bae410664bdb16554d7eda03654b22627b9284ab55a685492d4)
+
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 0c932f72e92a5e42a81ff0840e01d2ea3b98ecc2)
+set(OPENMW_VERSION 440b4d5ca12d7648323501d8303ba48b0bdcbd16)
 set(OPENMW_HASH SHA256=44d044ad0a5546216fe611fe92c37065bb07e2efeeeaac4f049dae03df313186)
 
 # End of configurable options
@@ -109,7 +112,7 @@ if (${BUILD_TYPE} STREQUAL "debug")
 	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --disable-asm --disable-optimizations)
 endif()
 
-if ((${ARCH} STREQUAL "x86_64") OR (${ARCH} STREQUAL "x86"))
+if ((${ARCH} STREQUAL "x86_64") OR (${ARCH} STREQUAL "x86") OR (${ARCH} STREQUAL "arm64"))
 	# ffmpeg fails to link with assembly optimizations on x86-64
 	set(ffmpeg_configure_flags ${ffmpeg_configure_flags} --disable-asm)
 endif()
@@ -152,6 +155,28 @@ ExternalProject_Add(libpng
 
 	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/configure
 	${COMMON_AUTOCONF_FLAGS}
+
+	BUILD_COMMAND ${wrapper_command} $(MAKE) check_PROGRAMS= bin_PROGRAMS=
+
+	INSTALL_COMMAND ${wrapper_command} $(MAKE) install check_PROGRAMS= bin_PROGRAMS=
+)
+
+
+set(libicu_flags
+	--disable-tests
+	--disable-samples
+	--disable-icuio
+	--disable-extras
+	--with-cross-build=${CMAKE_SOURCE_DIR}/build/icu-host-build)
+
+ExternalProject_Add(libicu
+	URL https://github.com/unicode-org/icu/archive/refs/tags/release-${LIBICU_VERSION}.zip
+	URL_HASH ${LIBICU_HASH}
+	DOWNLOAD_DIR ${download_dir}
+
+	CONFIGURE_COMMAND ${wrapper_command} <SOURCE_DIR>/icu4c/source/configure
+	${COMMON_AUTOCONF_FLAGS}
+	${libicu_flags}
 
 	BUILD_COMMAND ${wrapper_command} $(MAKE) check_PROGRAMS= bin_PROGRAMS=
 
@@ -213,6 +238,7 @@ ExternalProject_Add(boost
 	--with-program_options
 	--with-system
 	--with-iostreams
+	--with-regex
 	--ignore-site-config
 	toolset=clang-android
 	architecture=${BOOST_ARCH}
@@ -226,10 +252,10 @@ ExternalProject_Add(boost
 	link=static
 	runtime-link=static
 	install
-	COMMAND ${host}-ranlib ${prefix}/lib/libboost_filesystem.a
-	COMMAND ${host}-ranlib ${prefix}/lib/libboost_program_options.a
-	COMMAND ${host}-ranlib ${prefix}/lib/libboost_system.a
-	COMMAND ${host}-ranlib ${prefix}/lib/libboost_iostreams.a
+	COMMAND llvm-ranlib ${prefix}/lib/libboost_filesystem.a
+	COMMAND llvm-ranlib ${prefix}/lib/libboost_program_options.a
+	COMMAND llvm-ranlib ${prefix}/lib/libboost_system.a
+	COMMAND llvm-ranlib ${prefix}/lib/libboost_iostreams.a
 )
 
 ExternalProject_Add(ffmpeg
@@ -242,7 +268,7 @@ ExternalProject_Add(ffmpeg
 	${ffmpeg_configure_flags}
 	--target-os=android
 	--enable-cross-compile
-	--cross-prefix=${host}-
+	--cross-prefix=llvm-
 	--cc=${host}-clang
 	--arch=${ARCH}
 	--cpu=${FFMPEG_CPU}
@@ -382,7 +408,7 @@ set(LUAJIT_MAKE_FLAGS
 	HOST_CC=${LUAJIT_HOST_CC}
 	CFLAGS=
 	TARGET_CFLAGS=$ENV{CFLAGS}
-	CROSS=${host}-
+	CROSS=llvm-
 	STATIC_CC=${host}-clang
 	DYNAMIC_CC=${host}-clang\ -fPIC
 	TARGET_LD=${host}-clang
@@ -390,8 +416,8 @@ set(LUAJIT_MAKE_FLAGS
 )
 
 ExternalProject_Add(luajit
-	URL https://luajit.org/download/LuaJIT-${LUAJIT_VERSION}.tar.gz
-	URL_HASH ${LUAJIT_HASH}
+	URL https://github.com/luaJit/LuaJIT/archive/${LUAJIT_VERSION}.tar.gz
+#	URL_HASH ${LUAJIT_HASH}
 	DOWNLOAD_DIR ${download_dir}
 
 	BUILD_IN_SOURCE 1
@@ -481,6 +507,8 @@ set(OSG_COMMON
 	-DJPEG_INCLUDE_DIR=${prefix}/include/
 	-DPNG_INCLUDE_DIR=${prefix}/include/
 	-DFREETYPE_DIR=${prefix}
+        -DCOLLADA_INCLUDE_DIR=${prefix}/include/collada-dom2.5
+        -DCOLLADA_DIR=${prefix}/include/collada-dom2.5/1.4
 	-DOSG_CPP_EXCEPTIONS_AVAILABLE=TRUE
 	-DOSG_GL1_AVAILABLE=ON
 	-DOSG_GL2_AVAILABLE=OFF
@@ -505,7 +533,8 @@ set(OSG_PATCH
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0001-Replace-Atomic-impl-with-std-atomic.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0002-BufferObject-make-numClients-atomic.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0004-IncrementalCompileOperation-wrap-some-stuff-in-atomi.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/remove-zlib-dependency.patch &&
+	#patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/remove-zlib-dependency.patch &&
+	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/force-add-plugins.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/dae_collada.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/psa.patch &&
 	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/osg/0005-CullSettings-make-inheritanceMask-atomic-to-silence-.patch
@@ -544,8 +573,7 @@ set(OPENMW_COMMON
 	-DBUILD_BULLETOBJECTTOOL=0
 	-DOPENMW_USE_SYSTEM_SQLITE3=OFF
 	-DOPENMW_USE_SYSTEM_YAML_CPP=OFF
-	-DOPENMW_USE_SYSTEM_ICU=OFF
-	-DOPENMW_ICU_HOST_BUILD_DIR=${prefix}/../../build/icu-host-build
+	-DOPENMW_USE_SYSTEM_ICU=ON
  	#-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON
  	#-DCMAKE_POLICY_DEFAULT_CMP0069=NEW
 	#-DOPENMW_LTO_BUILD=1
@@ -560,16 +588,16 @@ set(OPENMW_COMMON
 )
 
 set(OPENMW_PATCH
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0001-loadingscreen-disable-for-now.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0009-windowmanagerimp-always-show-mouse-when-possible-pat.patch &&
+        patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0001-loadingscreen-disable-for-now.patch &&
+        patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0009-windowmanagerimp-always-show-mouse-when-possible-pat.patch &&
         #patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/0010-android-fix-context-being-lost-on-app-minimize.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/fix-build.patch &&
-	patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/psa.patch &&
+        patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/fix-build.patch &&
+        patch -d <SOURCE_DIR> -p1 -t -N < ${CMAKE_SOURCE_DIR}/patches/openmw/psa.patch &&
 	cp ${CMAKE_SOURCE_DIR}/patches/openmw/android_main.cpp <SOURCE_DIR>/apps/openmw/android_main.cpp
 )
 
 ExternalProject_Add(openmw
-	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet lz4 luajit
+	DEPENDS boost openal osg mygui ffmpeg sdl2 bullet lz4 luajit libicu
 
 	URL https://github.com/sisah2/openmw/archive/${OPENMW_VERSION}.tar.gz
 #	URL_HASH ${OPENMW_HASH}
