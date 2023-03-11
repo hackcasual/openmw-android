@@ -37,11 +37,11 @@ set(MYGUI_VERSION 3.4.1)
 set(MYGUI_HASH SHA256=d1d5f294670ae71f7200ed4b30859018281d8cfd45d6a38d18b97a4aba604c42)
 
 # https://github.com/sisah2/gl4es/releases
-set(GL4ES_VERSION 9a06ec51d7c819e61d83da7e81d76fcd44cd949b)
+set(GL4ES_VERSION 045050142b66cb66e43702f2b5775081591f0a7a)
 set(GL4ES_HASH SHA256=b565e717c7d192e936bda25f3cb90ad8db398af56414ec08294b6716574c1a6d)
 
 # https://github.com/openscenegraph/OpenSceneGraph/releases
-set(OSG_VERSION bbe61c3bc510a4f5bb4aea21cce506519c2d24e6)
+set(OSG_VERSION 69cfecebfb6dc703b42e8de39eed750a84a87489)
 set(OSG_HASH SHA256=aea196550f02974d6d09291c5d83b51ca6a03b3767e234a8c0e21322927d1e12)
 
 # https://github.com/lz4/lz4/releases
@@ -56,7 +56,7 @@ set(LIBICU_VERSION 70-1)
 set(LIBICU_HASH SHA256=4013d7aff8a34bae410664bdb16554d7eda03654b22627b9284ab55a685492d4)
 
 # https://github.com/OpenMW/openmw/commits/master
-set(OPENMW_VERSION 69373b9f358a89fce4815d3f91188e46c950a2f6)
+set(OPENMW_VERSION 63da458068a5f092191d776dc0a4e71873727f86)
 set(OPENMW_HASH SHA256=44d044ad0a5546216fe611fe92c37065bb07e2efeeeaac4f049dae03df313186)
 
 # End of configurable options

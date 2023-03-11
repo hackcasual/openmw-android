@@ -125,8 +125,8 @@ echo ""
 
 echo "==> Download and set up the NDK"
 ./include/download-ndk.sh
-./include/setup-icu.sh
 ./include/setup-ndk.sh
+./include/setup-icu.sh
 
 NCPU=$(grep -c ^processor /proc/cpuinfo)
 echo "==> Build using $NCPU CPUs"
