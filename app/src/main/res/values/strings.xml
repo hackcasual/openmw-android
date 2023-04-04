@@ -26,16 +26,6 @@
         <item>2</item>
     </string-array>
 
-    <string-array name="gs_default_shoulder_entries">
-        <item>Right</item>
-        <item>Left</item>
-    </string-array>
-
-    <string-array name="gs_default_shoulder_values">
-        <item>30 -10</item>
-        <item>-30 -10</item>
-    </string-array>
-
     <string-array name="gs_show_owned_entries">
         <item>Off</item>
         <item>Tool Tip Only</item>
@@ -64,6 +54,18 @@
         <item>4</item>
         <item>8</item>
         <item>16</item>
+    </string-array>
+
+    <string-array name="gs_groundcover_handling_entries">
+        <item>Off</item>
+        <item>Paging</item>
+        <item>Instancing</item>
+    </string-array>
+
+    <string-array name="gs_groundcover_handling_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string name="general_settings">Setup</string>
@@ -181,7 +183,8 @@
     <string name="activity_mods">Mods</string>
     <string name="tab_plugins">Plugins</string>
     <string name="tab_resources">Resources</string>
-    <string name="tab_dirs">Dirs</string>
+    <string name="tab_dirs">Directories</string>
+    <string name="tab_groundcover">Groundcover</string>
     <string name="data_error_title">Error locating data files</string>
     <string name="data_error_message">Please select a directory which contains both the \"Morrowind.ini\" file and the \"Data Files\" directory.</string>
     <string name="permissions_error_title">No permissions</string>

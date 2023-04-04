@@ -38,6 +38,7 @@ class ModsActivity : AppCompatActivity() {
     val mPluginAdapter = ModsAdapter()
     val mResourceAdapter = ModsAdapter()
     val mDirAdapter = ModsAdapter()
+    val mGroundcoverAdapter = ModsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +58,7 @@ class ModsActivity : AppCompatActivity() {
                     updateModList()
                     mPluginAdapter.notifyDataSetChanged()
                     mResourceAdapter.notifyDataSetChanged()
+                    mGroundcoverAdapter.notifyDataSetChanged()
                 }
 		
                 flipper.displayedChild = tab.position
@@ -73,6 +75,7 @@ class ModsActivity : AppCompatActivity() {
         setupModList(findViewById(R.id.list_mods), ModType.Plugin)
         setupModList(findViewById(R.id.list_resources), ModType.Resource)
         setupModList(findViewById(R.id.list_dirs), ModType.Dir)
+        setupModList(findViewById(R.id.list_groundcovers), ModType.Groundcover)
 
         updateModList()
     }
@@ -105,6 +108,7 @@ class ModsActivity : AppCompatActivity() {
 
         mPluginAdapter.collection = ModsCollection(ModType.Plugin, dataFilesList, database)
         mResourceAdapter.collection = ModsCollection(ModType.Resource, dataFilesList, database)
+        mGroundcoverAdapter.collection = ModsCollection(ModType.Groundcover, dataFilesList, database)
     }
 
     /**
@@ -148,13 +152,21 @@ class ModsActivity : AppCompatActivity() {
             mResourceAdapter.touchHelper = touchHelper
             list.adapter = mResourceAdapter
         }
-        else {
+        else if (type == ModType.Dir){
 	    mDirAdapter.collection = ModsCollection(type, dataFilesList, database)
             val callback = ModMoveCallback(mDirAdapter)
             val touchHelper = ItemTouchHelper(callback)
             touchHelper.attachToRecyclerView(list)
             mDirAdapter.touchHelper = touchHelper
             list.adapter = mDirAdapter
+        }
+	else if (type == ModType.Groundcover){ 
+	    mGroundcoverAdapter.collection = ModsCollection(type, dataFilesList, database)
+            val callback = ModMoveCallback(mGroundcoverAdapter)
+            val touchHelper = ItemTouchHelper(callback)
+            touchHelper.attachToRecyclerView(list)
+            mGroundcoverAdapter.touchHelper = touchHelper
+            list.adapter = mGroundcoverAdapter
         }
     }
 

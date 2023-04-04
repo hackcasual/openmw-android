@@ -294,6 +294,7 @@ class MainActivity : AppCompatActivity() {
         val resources = ModsCollection(ModType.Resource, dataFilesList, db)
         val dirs = ModsCollection(ModType.Dir, dataDirsPath, db)
         val plugins = ModsCollection(ModType.Plugin, dataFilesList, db)
+        val groundcovers = ModsCollection(ModType.Groundcover, dataFilesList, db)
 
         try {
             // generate final output.cfg
@@ -314,9 +315,14 @@ class MainActivity : AppCompatActivity() {
                 .filter { it.enabled }
                 .forEach { output += "content=${it.filename}\n" }
 
+            // output groundcovers
+            groundcovers.mods
+                .filter { it.enabled }
+                .forEach { output += "groundcover=${it.filename}\n" }
+
             // write everything to openmw.cfg
             File(Constants.OPENMW_CFG).writeText(output)
-//            File("/storage/emulated/0/omw_nightly/config/test.cfg").writeText(output)
+            File("/storage/emulated/0/omw_nightly/config/modlist.cfg").writeText(output)
         } catch (e: IOException) {
             Log.e(TAG, "Failed to generate openmw.cfg.", e)
         }
@@ -512,9 +518,7 @@ class MainActivity : AppCompatActivity() {
                     displayWidth = if(resolutionX == 0) dm.widthPixels else resolutionX
                     displayHeight = if(resolutionY == 0) dm.heightPixels else resolutionY
                 }
-            
-                File("/storage/emulated/0/omw_nightly/test.txt").writeText(displayWidth.toString() + " " + displayHeight.toString() + "\n" + resolutionX.toString() + " " + resolutionY.toString())
-                
+               
                 configureDefaultsBin(mapOf(
                         "scaling factor" to "%.2f".format(Locale.ROOT, scaling),
                         // android-specific defaults
@@ -639,7 +643,8 @@ class MainActivity : AppCompatActivity() {
                         "max quicksaves" to prefs.getString("gs_maximum_quicksaves", "1").toString(),
 
 			// Engine Settings
-                        "enabled" to if(prefs.getBoolean("gs_groundcover", false)) "true" else "false",
+                        "enabled" to if(prefs.getString("gs_groundcover_handling", "0") == "2") "true" else "false",
+                        "paging" to if(prefs.getString("gs_groundcover_handling", "0") == "1") "true" else "false",
                         "enable" to if(prefs.getBoolean("gs_build_navmesh", true)) "true" else "false",
                         "write to navmeshdb" to if(prefs.getBoolean("gs_write_navmesh", false)) "true" else "false",
                         "async nav mesh updater threads" to prefs.getString("gs_navmesh_threads", "1").toString(),

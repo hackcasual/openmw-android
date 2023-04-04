@@ -42,7 +42,7 @@ class ModsCollection(private val type: ModType,
     init {
         if (isEmpty())
             initDb()
-        syncWithFs()
+        syncWithFs(type)
         // The database might have become empty (e.g. if user deletes all mods) after the FS sync
         if (isEmpty())
             initDb()
@@ -98,7 +98,7 @@ class ModsCollection(private val type: ModType,
      * Synchronizes state of mods in database with the actual mod files on disk
      * This could result in it deleting or adding mods to the database.
      */
-    private fun syncWithFs() {
+    private fun syncWithFs(type: ModType) {
         var dbMods = listOf<Mod>()
 
         // Get mods from the database
@@ -119,9 +119,29 @@ class ModsCollection(private val type: ModType,
      	       extensions.contains(it.extension.toLowerCase())
      	   }
 
+           // Blacklist "Data Files" in Directories tab and default plugins in Groundcovers tab
+           val blacklist = mutableSetOf<String>()
+           if(type == ModType.Dir) {
+               blacklist.add("Data Files")
+           }
+
+           if(type == ModType.Groundcover) {
+               blacklist.add("Morrowind.esm")
+               blacklist.add("Tribunal.esm")
+               blacklist.add("Bloodmoon.esm")
+               blacklist.add("adamantiumarmor.esp")
+               blacklist.add("AreaEffectArrows.esp")
+               blacklist.add("bcsounds.esp")
+               blacklist.add("EBQ_Artifact.esp")
+               blacklist.add("entertainers.esp")
+               blacklist.add("LeFemmArmor.esp")
+               blacklist.add("master_index.esp")
+               blacklist.add("Siege at Firemoth.esp")
+           }
+
      	   // Collect filenames of mods on the FS
       	   modFiles?.forEach {
-     	       if(it.name != "Data Files") fsNames.add(it.name)
+     	       if(!blacklist.contains(it.name)) fsNames.add(it.name)
      	   }
      	   counter = counter + 1
 	}
