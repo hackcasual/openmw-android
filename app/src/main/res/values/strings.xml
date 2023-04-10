@@ -184,7 +184,7 @@
     <string name="tab_plugins">Plugins</string>
     <string name="tab_resources">Resources</string>
     <string name="tab_dirs">Directories</string>
-    <string name="tab_groundcover">Groundcover</string>
+    <string name="tab_groundcover">Groundcovers</string>
     <string name="data_error_title">Error locating data files</string>
     <string name="data_error_message">Please select a directory which contains both the \"Morrowind.ini\" file and the \"Data Files\" directory.</string>
     <string name="permissions_error_title">No permissions</string>
