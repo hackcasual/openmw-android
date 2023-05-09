@@ -612,6 +612,10 @@ class MainActivity : AppCompatActivity() {
                         "exponential fog" to if(prefs.getBoolean("gs_exponential_fog", false)) "true" else "false",
                         "sky blending" to if(prefs.getBoolean("gs_sky_blending", false)) "true" else "false",
 
+			// Visuals PostProcessing
+                        "soft particles" to if(prefs.getBoolean("gs_soft_particles", false)) "true" else "false",
+                        "transparent postpass" to if(prefs.getBoolean("gs_transparent_postpass", false)) "true" else "false",
+
 			// Animations
                         "use magic item animations" to if(prefs.getBoolean("gs_use_magic_item_animation", false)) "true" else "false",
                         "use additional anim sources" to if(prefs.getBoolean("gs_use_additional_animation_sources", false)) "true" else "false",
