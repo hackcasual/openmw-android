@@ -8,7 +8,7 @@
 
 ## Building
 
-There are two steps for building OpenMW for Android. The first step is building C/C++ libraries. The second step is building the Java launcher.
+There are two steps for building OpenMW for Android. The first step is building C/C++ libraries. The second step is building the Java launcher. Poke for run
 
 ### Prerequisites
 
